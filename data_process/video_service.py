@@ -1,12 +1,13 @@
 from typing import List
 import os 
 import cv2
+import numpy as np 
 
 class VideoService:
     def __init__(self, video_dir: str):
         self.video_dir = video_dir
 
-    def process_vid_to_img(self): 
+    def process_vid_to_img(self) -> List: 
         """
             This is the function to process the video to images 
             This function helps for training the model with images 
@@ -32,9 +33,13 @@ class VideoService:
                     img.append(frame) 
                     frame_count += 1 
                 # os.makedirs("./data/images", exist_ok=True)
-                    cv2.imwrite(f'./data/images/frame_{frame_count}.jpg', frame)
+                    #cv2.imwrite(f'./data/images/frame_{frame_count}.jpg', frame)
                 else : 
                     frame_count += 1 
+        print(type(img)) 
+        print(f"First image : {img[0].shape}")
+        print(f"Total images : {len(img)}")
+        return img 
         cap.release()
 
 if __name__ == "__main__": 
