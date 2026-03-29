@@ -13,6 +13,8 @@ class VideoService:
             This function helps for training the model with images 
         """
         cap = cv2.VideoCapture(self.video_dir) 
+        if not cap.isOpened():
+            raise ValueError("Video not opened. Check path or file.")
         frame_count = 0
         img = []
         os.makedirs("./data/images", exist_ok=True)
@@ -29,7 +31,7 @@ class VideoService:
                 break 
             else : 
                 # Taking every 15 frames 
-                if frame_count % 15 == 0:
+                if frame_count % 30 == 0:
                     img.append(frame) 
                     frame_count += 1 
                 # os.makedirs("./data/images", exist_ok=True)
