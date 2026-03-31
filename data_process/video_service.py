@@ -43,6 +43,10 @@ class VideoService:
         print(f"Total images : {len(img)}")
         return img 
         cap.release()
-
+    def upload_video_to_s3(self , video_path : str , bucket_name : str , object_name : str):
+        """
+            This is the function to upload the video to the S3 bucket
+        """
+        pass 
 if __name__ == "__main__": 
     VideoService(video_dir="/Users/muthuamuthan/Documents/img_reg/data_process/5b918baf-dfce-4897-8892-f8771cdcddc6.MP4").process_vid_to_img()
