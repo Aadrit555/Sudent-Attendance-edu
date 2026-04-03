@@ -3,8 +3,9 @@ import os
 import cv2 
 from data_process.video_service import VideoService 
 from PIL import Image 
-from facenet_pytorch import MTCNN 
+from facenet_pytorch import MTCNN , InceptionResnetV1
 import torch 
+import numpy as np 
 
 class ImageService: 
     def __init__(self , vid_path : str) -> None : 
@@ -43,6 +44,32 @@ class ImageService:
             print("No faces detected in any frame.")
 
         return face_images
+    
+    def face_embeddings(self , face_images : List) -> List: 
+        """
+            This is the function to get the face embeddings from the cropped face images 
+        """
+        if len(face_images) == 0:
+            raise ValueError("No face images provided for embedding.") 
+        device = 'cuda' if torch.cuda.is_available() else 'cpu' 
+        model = InceptionResnetV1(pretrained='vggface2').eval().to(device) 
+
+        embeddings = [] 
+
+        for face in face_images: 
+            img = img.resize((160, 160))
+            img_tensor = torch.tensor(np.array(img)).float()
+            img_tensor = (img_tensor - 127.5) / 128.0
+            img_tensor = img_tensor.permute(2, 0, 1)
+            img_tensor = img_tensor.unsqueeze(0).to(device)
+
+            with torch.no_grad():
+                emb = model(img_tensor)
+
+            embeddings.append(emb.squeeze().cpu().numpy())
+
+        return embeddings
+        
 
 if __name__ == "__main__": 
     ImageService("IMG_3352.MOV").reg_face() 
