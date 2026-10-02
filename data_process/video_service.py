@@ -38,15 +38,20 @@ class VideoService:
                     #cv2.imwrite(f'./data/images/frame_{frame_count}.jpg', frame)
                 else : 
                     frame_count += 1 
-        print(type(img)) 
-        print(f"First image : {img[0].shape}")
-        print(f"Total images : {len(img)}")
-        return img 
         cap.release()
-    def upload_video_to_s3(self , video_path : str , bucket_name : str , object_name : str):
+        print(f"Extracted {len(img)} frames")
+        return img 
+
+    def upload_video_to_s3(self, video_path: str, bucket_name: str, object_name: str):
         """
-            This is the function to upload the video to the S3 bucket
+        Upload the video to an S3 bucket.
         """
-        pass 
-if __name__ == "__main__": 
-    VideoService(video_dir="/Users/muthuamuthan/Documents/img_reg/data_process/5b918baf-dfce-4897-8892-f8771cdcddc6.MP4").process_vid_to_img()
+        import boto3
+        s3_client = boto3.client("s3")
+        s3_client.upload_file(video_path, bucket_name, object_name)
+
+
+if __name__ == "__main__":
+    sample_path = os.getenv("SAMPLE_VIDEO_PATH", "data_process/5b918baf-dfce-4897-8892-f8771cdcddc6.MP4")
+    if os.path.exists(sample_path):
+        VideoService(video_dir=sample_path).process_vid_to_img()

@@ -1,6 +1,56 @@
-data_process/5b918baf-dfce-4897-8892-f8771cdcddc6.MP4
-data_process/data 
-data_process/IMG_3352.MOV
-data/attendance.db
-model/artifacts/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches & Environments
+.pytest_cache/
+.mypy_cache/
+env/
+venv/
+.venv/
+ENV/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+__MACOSX/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Video and Media files
+*.mp4
+*.MP4
+*.mov
+*.MOV
+*.avi
+*.mkv
 trainingvideos/
+data_process/data/
+data/images/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+data/attendance.db
+
+# Model checkpoints & artifacts
+model/artifacts/*.joblib
+model/artifacts/*.json
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

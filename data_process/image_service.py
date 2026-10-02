@@ -97,4 +97,9 @@ class ImageService:
         
 
 if __name__ == "__main__": 
-    ImageService("IMG_3352.MOV").reg_face() 
+    import sys
+    test_video = sys.argv[1] if len(sys.argv) > 1 else "IMG_3352.MOV"
+    if os.path.exists(test_video):
+        ImageService(test_video).reg_face()
+    else:
+        print(f"Video file '{test_video}' not found.") 
